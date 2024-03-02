@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Just another carousel - Nothing4us</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/static/welcome.css" />
+  </head>
+  <body>
+    <!-- partial:index.partial.html -->
+    <main>
+      <div class="content">
+        <h2>Welcome to</h2>
+        <br /><br />
+        <div class="content">
+          <h1>EasyBazaar</h1>
+          <h1>EasyBazaar</h1>
+        </div>
+        <br />
+        <ul class="counter">
+          <li>
+            <h3><i class="fa-solid fa-user"></i>25,634</h3>
+            <span>customers</span>
+          </li>
+          <li>
+            <h3><i class="fa-brands fa-shopify"></i>7K+</h3>
+            <span>Products</span>
+          </li>
+        </ul>
+        <a href="{% url 'signup' %}" style="--color: #1e9bff"
+          ><span>Login</span><i></i
+        ></a>
+      </div>
+
+      <div class="swiper-container">
+        <div class="swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide swiper-slide--one">
+              <span>Top Category</span>
+              <div class="slide-content">
+                <h3>Fashion</h3>
+              </div>
+            </div>
+            <div class="swiper-slide swiper-slide--two">
+              <span>Top Category</span>
+              
+            </div>
+            <div class="swiper-slide swiper-slide--three">
+              <span>Top Category</span>
+            </div>
+            <div class="swiper-slide swiper-slide--four">
+              <span>Top Category</span>
+            </div>
+            <div class="swiper-slide swiper-slide--five">
+              <span>Top Category</span>
+            </div>
+            <div class="swiper-slide swiper-slide--six">
+              <span>Top Category</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="swiper-pagination"></div>
+      </div>
+      <div class="circle"></div>
+    </main>
+    <!-- partial -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.js"></script>
+    <script src="/static/welcome.js"></script>
+  </body>
+</html>
