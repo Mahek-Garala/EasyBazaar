@@ -19,13 +19,19 @@ def signup(request):
         data = {
             "error_message": "",
             "page" : "signup",
+            "name" : name,
+            "email" : email,
+            "password" : password,
+            "phone" : phone,
+
         }
-        if len(phone) != 10:
-            data["error_message"] = "Phone number should be 10 digits"
-            return render(request, 'login.html', data)
         if existing_customer:
             data['error_message']= "A customer with the same email already exists"
             return render(request,'login.html',data)
+        if len(phone) != 10:
+            data["error_message"] = "Phone number should be 10 digits"
+            return render(request, 'login.html', data)
+       
         customer = Customer(name=name, email=email, phone=phone, password=password)
         customer.password = make_password(customer.password)
         customer.save()
@@ -37,7 +43,7 @@ def home(request):
 
 def login(request):
     if request.method == 'POST':
-        type  = request.POST.get('type')
+        # type  = request.POST.get('type')
         name = request.POST.get('name')
         password = request.POST.get('password')
         flag = True
@@ -57,5 +63,7 @@ def login(request):
         data = {
             "error_message": "Invalid Username or Password",
             "page" : "login",
+            "name" : name,
+            "password" : password,
         }
     return render(request,'login.html',data)

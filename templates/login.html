@@ -43,15 +43,16 @@
             <option value="seller">Seller</option>
             <option value="admin">Admin</option>
           </select>
-          <input type="text" placeholder="Name" name="name" required />
-          <input type="email" placeholder="Email" name="email" required />
+          <input type="text" placeholder="Name" name="name" value="{{name}}" required />
+          <input type="email" placeholder="Email" name="email" value="{{email}}" required />
           <input
             type="password"
             placeholder="Password"
             name="password"
+            value="{{password}}"
             required
           />
-          <input type="tel" placeholder="Phone No" name="phone" required />
+          <input type="tel" placeholder="Phone No" name="phone" value="{{phone}}" required />
 
           <button>Sign Up</button>
         </form>
@@ -88,11 +89,12 @@
             <option value="seller">Seller</option>
             <option value="admin">Admin</option>
           </select>
-          <input type="text" placeholder="Username" name="name" required />
+          <input type="text" placeholder="Username" name="name" value="{{name}}"required />
           <input
             type="password"
             placeholder="Password"
             name="password"
+            value="{{password}}"
             required
           />
 
@@ -138,7 +140,7 @@
       {% endif %}
 
       {% if page == "login" %}
-      
+        container.classList.remove("right-panel-active");
       {% endif %}
 
     </script>
