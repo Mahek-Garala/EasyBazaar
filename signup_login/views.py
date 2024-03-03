@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from .models import Customer
+from django.contrib.auth.hashers import make_password , check_password
+
 # Create your views here.
 
 # def welcome(request):
@@ -13,12 +15,13 @@ def signup(request):
         email  = request.POST.get('email')
         password = request.POST.get('password')
         phone = request.POST.get('phone')
-        existing_customer = Customer.objects.filter(email=email).first() or Customer.objects.filter(phone=phone).first()
+        existing_customer = Customer.objects.filter(email=email).first() 
         if len(phone) != 10:
             return render(request, 'login.html', {'error_message': 'Phone number should be 10 digits'})
         if existing_customer:
-            return render(request,'login.html',{'error_message': 'A customer with the same email or phone number already exists'})
+            return render(request,'login.html',{'error_message': 'A customer with the same email already exists'})
         customer = Customer(name=name, email=email, phone=phone, password=password)
+        customer.password = make_password(customer.password)
         customer.save()
         
     return render(request,'login.html')
@@ -31,11 +34,19 @@ def login(request):
         type  = request.POST.get('type')
         name = request.POST.get('name')
         password = request.POST.get('password')
-        phone = request.POST.get('phone')
-        if len(phone) != 10:
-            return render(request, 'login.html', {'error_message': 'Phone number should be 10 digits'})
-        customer = Customer.objects.filter(name=name, password=password, phone=phone).first()
+        flag = True
+        try:
+            customer = Customer.objects.get(name=name)
+        except:
+            flag = False
+        print(customer)
         if customer:
-            return render(request,'home.html')
+            print(customer.password)
+            flag = check_password(password,customer.password)
+            print(flag)
+            if flag:
+                return render(request,'home.html')
+        # customer = Customer.objects.filter(name=name, password=password).first()
         
-    return render(request,'login.html',{'error_message' : 'Username and Password does not match'})
+        
+    return render(request,'login.html',{'error_message' : 'Invalid Username or Password'})
