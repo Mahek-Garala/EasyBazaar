@@ -1,0 +1,61 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    width: 40%;
+    margin: 100px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+
+form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+ label {
+    margin-right: 5px;
+    margin-top:-2px;
+} 
+
+.check {
+    display: flex;
+    flex-direction: row;
+}
+
+input[type="text"],
+input[type="file"],
+input[type="checkbox"],
+button {
+    width: 100%;
+    padding: 6px;
+    margin-top:5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #2a9649;
+    color: #fff;
+    border: none;
+    font-size: medium ;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 100px;
+    height: 38px;
+}
+
+button:hover {
+    background-color: #178937;
+}
+
+h2{
+    text-align: center;
+}

@@ -38,13 +38,25 @@
             </p>
           </div>
           {% endif %}
-          <select name="typer">
-            <option value="customer">Customer</option>
-            <option value="seller">Seller</option>
-            <option value="admin">Admin</option>
+          <select name="type">
+            <option value="Customer">Customer</option>
+            <option value="Seller">Seller</option>
+            <option value="Admin">Admin</option>
           </select>
-          <input type="text" placeholder="Name" name="name" value="{{name}}" required />
-          <input type="email" placeholder="Email" name="email" value="{{email}}" required />
+          <input
+            type="text"
+            placeholder="Name"
+            name="name"
+            value="{{name}}"
+            required
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            value="{{email}}"
+            required
+          />
           <input
             type="password"
             placeholder="Password"
@@ -52,8 +64,15 @@
             value="{{password}}"
             required
           />
-          <input type="tel" placeholder="Phone No" name="phone" value="{{phone}}" required />
-
+          <input
+            type="tel"
+            placeholder="Phone No"
+            name="phone"
+            value="{{phone}}"
+            required
+          />
+        
+          
           <button>Sign Up</button>
         </form>
       </div>
@@ -85,11 +104,17 @@
           </div>
           {% endif %}
           <select name="type">
-            <option value="customer">Customer</option>
-            <option value="seller">Seller</option>
-            <option value="admin">Admin</option>
+            <option value="Customer">Customer</option>
+            <option value="Seller">Seller</option>
+            <option value="Admin">Admin</option>
           </select>
-          <input type="text" placeholder="Username" name="name" value="{{name}}"required />
+          <input
+            type="text"
+            placeholder="Username"
+            name="name"
+            value="{{name}}"
+            required
+          />
           <input
             type="password"
             placeholder="Password"
@@ -142,7 +167,6 @@
       {% if page == "login" %}
         container.classList.remove("right-panel-active");
       {% endif %}
-
     </script>
   </body>
 </html>
