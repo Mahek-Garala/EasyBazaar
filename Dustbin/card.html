@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Card</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+  <style>
+    .product-card {
+      width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-card img {
+      width: 95%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .product-card .product-info {
+      margin-top: 10px;
+    }
+
+    .product-card .product-info h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .product-card .product-info p {
+      margin: 0;
+      color: #666;
+    }
+
+    .product-card .product-info .price {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .product-card .product-info .ratings {
+      color: #FFD700;
+    }
+
+    .product-card .carousel {
+      margin-top: 20px;
+    }
+
+    .product-card .actions {
+      margin-top: 20px;
+    }
+
+    .product-card .actions button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .product-card .actions button.favorite {
+      background-color: #f8f8f8;
+      color: #666;
+    }
+
+    .product-card .actions button.cart {
+      background-color: #007bff;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="product-card">
+    <img src="https://via.placeholder.com/300x200" alt="Product Image">
+    <div class="product-info">
+      <h3>Product Name</h3>
+      <p class="price">$99.99</p>
+      <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <p class="ratings"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="far fa-star"></i> (4.0)</p>
+    </div>
+    <div class="carousel">
+      <div><img src="https://via.placeholder.com/100x100" alt="Product Image"></div>
+      <div><img src="https://via.placeholder.com/100x100" alt="Product Image"></div>
+      <div><img src="https://via.placeholder.com/100x100" alt="Product Image"></div>
+    </div>
+    <div class="actions">
+      <button class="favorite"><i class="fas fa-heart"></i> Add to Favorites</button>
+      <button class="cart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('.carousel').slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+      });
+    });
+  </script>
+</body>
+</html>

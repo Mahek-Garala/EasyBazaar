@@ -1,0 +1,405 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Courgette&family=Noto+Serif+Vithkuqi:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Chonburi&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+  position: relative;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+main {
+  position: relative;
+
+  min-height: 100vh;
+  column-gap: 3rem;
+  padding-block: min(20vh, 3rem);
+  padding-inline: 2.3em;
+  align-items: center;
+  justify-content: center;
+  background: #000000;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 960px) {
+  main {
+    display: flex;
+    padding-inline: 0;
+  }
+}
+
+main .content {
+  width: 100%;
+  color: #fff;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 3em;
+}
+
+@media screen and (min-width: 960px) {
+  main .content {
+    width: 40%;
+    padding-left: 5em;
+    margin-bottom: 0;
+  }
+}
+
+main h2 {
+  letter-spacing: 0.8px;
+  font-weight: 700;
+  font-size: 65px;
+  left: 10%;
+  line-height: 1.2;
+}
+
+main p {
+  font-size: 22px;
+  line-height: 1.8;
+  margin-inline: auto;
+  margin-top: 10px;
+}
+
+main .counter {
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  margin: 2.5em 0 2em 0;
+  gap: 2em;
+}
+
+main .counter i {
+  margin-right: 10px;
+}
+
+main .counter span {
+  display: block;
+  text-transform: capitalize;
+  font-size: 0.8rem;
+  color: #c1c1c1;
+  margin-top: 3px;
+}
+
+main .btn {
+  background-color: #f4f4f4;
+  border: none;
+  color: rgb(0, 0, 0);
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 4px;
+  transition: 0.3s ease-in;
+}
+
+main .btn i {
+  margin-left: 15px;
+}
+
+main .btn:hover {
+  background-color: #2a9649;
+}
+
+.swiper-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  right: 0px;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 960px) {
+  .swiper-container {
+    width: 60%;
+    right: -60px;
+  }
+}
+
+.swiper {
+  position: relative;
+  width: 100%;
+  z-index: 2;
+}
+
+.swiper-slide {
+  width: 10rem;
+  height: 24rem;
+  display: flex;
+  flex-direction: column;
+  align-items: self-start;
+  position: relative;
+  border-radius: 12px;
+  box-shadow: -1px 5px 15px #484747;
+  text-align: center;
+  opacity: 0.4;
+  transition: opacity 0.4s ease-in;
+}
+
+.swiper-slide span {
+  display: inline-block;
+  background: #2a9649;
+  border-radius: 0 50px 50px 0;
+  text-transform: capitalize;
+  padding: 12px 20px;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  position: absolute;
+  top: 2em;
+  left: 0;
+  color: #fff;
+}
+
+.swiper-slide h3 {
+  color: #fff;
+  font-size: 1.3rem;
+  line-height: 1.4;
+  margin-bottom: 0.625rem;
+  letter-spacing: 0.8px;
+  position: relative;
+  word-wrap: break-word;
+}
+
+@media screen and (min-width: 800px) {
+  .swiper-slide h3 {
+    font-size: 1.8rem;
+  }
+}
+
+.swiper-slide p {
+  color: #fff;
+  line-height: 1.6;
+  font-size: 0.8rem;
+}
+
+.swiper-slide .slide-content {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, -10px);
+  width: 90%;
+}
+
+.swiper-slide--one {
+  background: linear-gradient(to bottom, #2c536400, #203a4303, #0f2027cc), url("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Fvector-art%2F13259761-consumer-view-choose-and-buy-fashion-items-on-ecommerce-marketplace-on-computer-screen-flat-design-icon-vector-illustration&psig=AOvVaw2TPq8vKLQh-3nhr0-h9hMN&ust=1703352592551000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCPCioofJo4MDFQAAAAAdAAAAABAE") no-repeat 50% 50%/cover;
+}
+
+.swiper-slide--two {
+  background: linear-gradient(to bottom, #2c536400, #203a4303, #0f2027cc), url("https://img.freepik.com/free-vector/online-shopping-isometric-icon-internet-purchase-laptop-with-shop-basket-screen-online-payment_39422-973.jpg?w=900&t=st=1703266500~exp=1703267100~hmac=f6786259f3b89ed25f90ddddec3a0b4a2b692c9d4de2c694b18f09c5123e03fc") no-repeat 50% 50%/cover;
+}
+
+.swiper-slide--one h3 {
+  font-family: "Courgette", cursive;
+  font-weight: 300;
+}
+
+.swiper-slide--two h3 {
+  font-family: "Noto Serif Vithkuqi", serif;
+  font-weight: 300;
+}
+
+.swiper-slide--three {
+  background: url("C:\Users\rich1\OneDrive\Desktop\EasyBazaar\Photos\Electronics.jpg") no-repeat 50% 50%/cover;
+}
+
+.swiper-slide--four {
+  background: url("https://covers.audiobooks.com/images/covers/full/9781511358378.jpg") no-repeat 50% 50%/cover;
+}
+
+.swiper-slide--five {
+  background: url("https://cdn.pixabay.com/photo/2015/02/20/16/59/deer-643340_1280.jpg") no-repeat 50% 50%/cover;
+}
+
+.swiper-slide--six {
+  background: linear-gradient(to bottom, #2c536400, #203a4303, #0f2027cc), url("https://cdn.pixabay.com/photo/2022/11/04/23/15/woman-7570834_1280.jpg") no-repeat 50% 50%/cover;
+}
+
+.swiper-slide--six h3 {
+  font-family: "Chonburi", cursive;
+  font-weight: 400;
+}
+
+.swiper-slide-active {
+  display: grid;
+  opacity: 1;
+}
+
+.swiper-pagination {
+  position: relative;
+  bottom: -0.313rem;
+  text-align: center;
+  margin-top: 35px;
+  width: auto;
+}
+
+.swiper-pagination-bullet {
+  border-radius: 0;
+  width: 1.5rem;
+  height: 0.25rem;
+  background: #fff;
+}
+
+.swiper-pagination-bullet-active {
+  background: #fff;
+}
+
+.circle {
+  position: absolute;
+  bottom: -5em;
+  left: -8em;
+  width: clamp(150px, 40vw, 400px);
+  height: clamp(150px, 40vw, 400px);
+  background: black;
+  border-radius: 50%;
+  z-index: 1;
+  opacity: 0.7;
+}
+
+
+/*****************************************************************************************************************************/
+/* BUTTON */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap');
+
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+} */
+
+/* .container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  background: #27282c;
+} */
+
+a {
+  position: relative;
+  background: #444;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  letter-spacing: 0.1rem;
+  padding: 0.75rem 1.5rem;
+  transition: 0.5s;
+}
+
+a:hover {
+  letter-spacing: 0.25rem;
+  background: #32ff1e;
+  color: #32ff1e;
+  box-shadow: 0 0 35px #32ff1e;
+}
+
+a::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: #27282c;
+}
+
+a span {
+  position: relative;
+  z-index: 1;
+}
+
+a i {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+a i::before {
+  content: '';
+  position: absolute;
+  top: -3.5px;
+  left: 80%;
+  width: 10px;
+  height: 5px;
+  border: 2px solid #32ff1e;
+  background: #27282c;
+  transform: translateX(-50%);
+  transition: 0.5s;
+}
+
+a:hover i::before {
+  left: 20%;
+  width: 10px;
+}
+
+a i::after {
+  content: '';
+  position: absolute;
+  bottom: -3.5px;
+  left: 20%;
+  width: 8px;
+  height: 5px;
+  border: 2px solid #32ff1e;
+  background: #27282c;
+  transform: translateX(-50%);
+  transition: 0.5s;
+}
+
+a:hover i::after {
+  left: 80%;
+  width: 20px;
+}
+
+
+/*********************************************************************************************************************************/
+
+/* TITLE NAME */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100&display=swap');
+
+
+/* .content{
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+} */
+
+.content h1 {
+  position: absolute;
+  top: 50%;
+  left: 140%;
+  transform: translate(-50%, -50%);
+  font-size: 100px;
+}
+
+.content h1:nth-child(1) {
+  color: transparent;
+  -webkit-text-stroke: 1px #ffffff;
+}
+
+.content h1:nth-child(2) {
+  color: #32ff1e;
+  animation: animate 4s ease-in-out infinite;
+}
+
+@keyframes animate {
+
+  0%,
+  100% {
+    clip-path: polygon(0% 45%, 15% 44%, 32% 50%, 54% 60%, 70% 61%, 84% 59%, 100% 52%, 100% 100%, 0% 100%);
+  }
+
+  50% {
+    clip-path: polygon(0% 60%, 16% 65%, 34% 66%, 51% 62%, 67% 50%, 84% 45%, 100% 46%, 100% 100%, 0% 100%);
+  }
+}

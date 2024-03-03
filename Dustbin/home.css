@@ -1,0 +1,124 @@
+.banner-main {
+	position: relative;
+}
+.banner-main .carousel-caption h1 {
+	color: #020000;
+	font-size: 85px;
+   line-height: 90px;
+	text-transform: uppercase;
+}
+.banner-main .carousel-caption p {
+	color: #050000;
+    font-weight: 500;
+    	
+    line-height: 23px;
+	 }
+.banner-main .carousel-caption a {
+    width: 250px;
+background: #ffc221;
+padding: 9px 0px;
+color: #ffffff;
+font-size: 17px;
+border-radius: 30px 0px 30px 30px;
+display: inline-block;
+text-align: center;
+margin-top: 20px;
+
+}
+.banner-main .carousel-caption a:hover {
+	background: #000;
+}
+.yellow_bold {color: #ffc221;}
+
+/** whyschose section **/
+
+.whyschose {
+	background: #fff;
+    padding-top: 85px;
+}
+
+
+.title {
+	text-align:center;
+	padding-bottom: 60px;
+
+}
+
+.title h2 {
+	font-size: 50px;
+	line-height: 55px;
+	color:#ffc221;
+	font-weight: 500;
+	text-transform: uppercase;
+    margin-bottom: 27px;
+    position: relative;
+    padding-bottom: 8px;
+}
+.title h2:after {
+	position: relative;
+content: '';
+top: 100%;
+width: 110px;
+height: 10px;
+display: block;
+margin: 0 auto;
+background: #000;
+}
+
+.title span{
+color:#070500;
+font-size: 28px;
+line-height: 28px;
+margin-top: 20px;
+}
+.black {
+	font-weight: 500;
+	color:#070500;
+}
+
+.choose_bg {
+	background: #f9be20;
+}
+
+
+.choose_bg .white_bg  {
+	background: #fff;
+	padding: 40px 20px;
+	box-shadow: #ddd 0px 0px 10px 3px;
+	margin-bottom: 5px;
+}
+.choose_bg .white_bg .for_box {
+	text-align: center;
+	padding: 1px ;
+}
+.choose_bg .white_bg .for_box i {display:block;}
+.choose_bg .white_bg .for_box h3 {
+	font-size: 26px;
+    line-height: 21px;
+	color: #070500;
+	padding: 25px 0px 15px 0px ;
+	display: inline-block; 
+}
+
+.choose_bg .white_bg .for_box p {
+	color: #0d0c0a;
+	font-size: 17px;
+	line-height: 28px;
+}
+
+.read-more  {
+	width: 190px;
+margin: 0 auto;
+background: #fff;
+display: block;
+border: #f9be20 solid 2px;
+text-align: center;
+padding: 10px 0px;
+color: #0a0401 !important;
+font-size: 20px;
+margin-top: 40px;
+}
+.read-more:hover {
+	background: #f9be20;
+	color: #0a0401;
+}
