@@ -16,6 +16,28 @@
           {% csrf_token %}
           <h1>Create Account</h1>
 
+          {% if error_message and page == "signup" %}
+          <div
+            style="
+              margin: 0px;
+              padding: 0px 3px;
+              height: fit-content;
+              width: 275px;
+              box-shadow: 1px 1px 1px 1px red;
+            "
+          >
+            <p
+              style="
+                margin: 9px 0px;
+                color: red;
+                font-weight: bold;
+                letter-spacing: 0px;
+              "
+            >
+              {{ error_message }}
+            </p>
+          </div>
+          {% endif %}
           <select name="typer">
             <option value="customer">Customer</option>
             <option value="seller">Seller</option>
@@ -39,10 +61,27 @@
         <form action="{% url 'login' %}" method="POST">
           {% csrf_token %}
           <h1>Login as</h1>
-		  {% if error_message %}
-		  <div style="margin:0px;padding: 0px 3px;height: 40px;width:275px;box-shadow: 1px 1px 1px 1px red;" >
-          	<p style="margin:9px 0px;color:red;font-weight:bold; letter-spacing:0px;">{{ error_message }}</p>
-		  </div>
+          {% if error_message and page == "login" %}
+          <div
+            style="
+              margin: 0px;
+              padding: 0px 3px;
+              height: fit-content;
+              width: 275px;
+              box-shadow: 1px 1px 1px 1px red;
+            "
+          >
+            <p
+              style="
+                margin: 9px 0px;
+                color: red;
+                font-weight: bold;
+                letter-spacing: 0px;
+              "
+            >
+              {{ error_message }}
+            </p>
+          </div>
           {% endif %}
           <select name="type">
             <option value="customer">Customer</option>
@@ -79,6 +118,29 @@
       </div>
     </div>
 
-    <script src="/static/login.js"></script>
+    <script>
+      const signUpButton = document.getElementById('signUp');
+      const signInButton = document.getElementById('signIn');
+      const container = document.getElementById('container');
+
+      signUpButton.addEventListener('click', () => {
+      	container.classList.add("right-panel-active");
+      });
+
+      signInButton.addEventListener('click', () => {
+      	container.classList.remove("right-panel-active");
+      });
+
+
+      {% if page == "signup"%}
+        container.classList.add("right-panel-active");
+
+      {% endif %}
+
+      {% if page == "login" %}
+      
+      {% endif %}
+
+    </script>
   </body>
 </html>
