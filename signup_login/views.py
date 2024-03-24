@@ -82,10 +82,24 @@ def seller_auth(request):
      
     return render(request,'company.html')
 
-def home(request):
-    return render(request,'home.html')
+# def home(request):
+#     types = {
+#          "customer" : None ,
+#         "seller" : None,
+#     }
+#     types['customer'] = request.session.get('customer')
+#     types['seller'] = request.session.get('seller')
+
+#     return render(request,'home.html',types)
 
 def login(request):
+    data = {
+        "error_message": "",
+        "page": "login",
+        "name": "",
+        "password": "",
+    }
+   
     if request.method == 'POST':
         type  = request.POST.get('type')
         name = request.POST.get('name')
@@ -101,21 +115,24 @@ def login(request):
         except:
             flag = False
 
+        
+
         if customer and type == "Customer"  :
             flag = check_password(password,customer.password)
             if flag:
-                return render(request,'home.html')
+                # return render(request,'home.html')
+                request.session['customer'] = customer.id
+                return redirect('/home/')
             
         if seller and type == "Seller":
             flag = check_password(password,seller.password)
             if flag:
-                return render(request,'home.html')
+                # return render(request,'home.html')
+                request.session['seller'] = seller.id
+                return redirect('/home/')
         # customer = Customer.objects.filter(name=name, password=password).first()
         
-        data = {
-            "error_message": "Invalid Username or Password",
-            "page" : "login",
-            "name" : name,
-            "password" : password,
-        }
+        data["error_message"] = "Invalid Username or Password"
+        data["name"] = name
+        data["password"] = password
     return render(request,'login.html',data)
