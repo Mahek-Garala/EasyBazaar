@@ -36,6 +36,8 @@ from . import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('' , include('signup_login.urls')),
+    path('home/' , include('mainProject.urls')),
+
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

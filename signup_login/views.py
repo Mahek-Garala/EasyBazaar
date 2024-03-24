@@ -82,15 +82,15 @@ def seller_auth(request):
      
     return render(request,'company.html')
 
-def home(request):
-    types = {
-         "customer" : None ,
-        "seller" : None,
-    }
-    types['customer'] = request.session.get('customer')
-    types['seller'] = request.session.get('seller')
+# def home(request):
+#     types = {
+#          "customer" : None ,
+#         "seller" : None,
+#     }
+#     types['customer'] = request.session.get('customer')
+#     types['seller'] = request.session.get('seller')
 
-    return render(request,'home.html',types)
+#     return render(request,'home.html',types)
 
 def login(request):
     data = {
@@ -122,14 +122,14 @@ def login(request):
             if flag:
                 # return render(request,'home.html')
                 request.session['customer'] = customer.id
-                return redirect('home')
+                return redirect('/home/')
             
         if seller and type == "Seller":
             flag = check_password(password,seller.password)
             if flag:
                 # return render(request,'home.html')
                 request.session['seller'] = seller.id
-                return redirect('home')
+                return redirect('/home/')
         # customer = Customer.objects.filter(name=name, password=password).first()
         
         data["error_message"] = "Invalid Username or Password"
