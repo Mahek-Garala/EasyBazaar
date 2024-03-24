@@ -2,12 +2,13 @@ from django.shortcuts import render , redirect
 from django.contrib.auth.models import User
 from .models import Customer
 from .models import Seller
+
+from mainProject.models import Category,Product
 from django.contrib.auth.hashers import make_password , check_password
 
 # Create your views here.
 
-# def welcome(request):
-#     return render(request,'welcome.html')
+
 def signup(request):
 
     if request.method == 'POST':
@@ -59,7 +60,7 @@ def signup(request):
             # data['page'] = "seller_auth"
             request.session['data'] = data 
             return redirect ('seller_auth')
-            # return render(request,'company.html',data)
+            return render(request,'company.html',data)
 
         data['page'] = "login"
 
@@ -77,20 +78,16 @@ def seller_auth(request):
         seller = Seller(name=name, email=email, phone=phone, password=password,company_name=company_name,proof_img=image)
         seller.password = make_password(seller.password)
         seller.save()
-        request.session.pop('data', None)
-        return render(request,'home.html')
+
+        products = Product.objects.filter(seller_id = name )
+        data = {
+            "products":products
+        }
+        # request.session.pop('data', None)
+        return render(request,'seller_home.html' , data)
      
     return render(request,'company.html')
 
-# def home(request):
-#     types = {
-#          "customer" : None ,
-#         "seller" : None,
-#     }
-#     types['customer'] = request.session.get('customer')
-#     types['seller'] = request.session.get('seller')
-
-#     return render(request,'home.html',types)
 
 def login(request):
     data = {
@@ -127,10 +124,13 @@ def login(request):
         if seller and type == "Seller":
             flag = check_password(password,seller.password)
             if flag:
-                # return render(request,'home.html')
                 request.session['seller'] = seller.id
-                return redirect('/home/')
-        # customer = Customer.objects.filter(name=name, password=password).first()
+                products = Product.objects.filter(seller_id = seller.id )
+                data = {
+                    "products" : products
+                }
+                return render(request,'seller_home.html',data)
+
         
         data["error_message"] = "Invalid Username or Password"
         data["name"] = name
