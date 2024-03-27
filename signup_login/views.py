@@ -60,7 +60,7 @@ def signup(request):
             # data['page'] = "seller_auth"
             request.session['data'] = data 
             return redirect ('seller_auth')
-            return render(request,'company.html',data)
+            # return render(request,'company.html',data)
 
         data['page'] = "login"
 
