@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="/static/assets/css/owl-carousel.css" />
     <link rel="stylesheet" href="/static/home.css" />
     <link rel="stylesheet" href="/static/catogery.css" />
+    <link rel="stylesheet" href="/static/search.css" />
+
     <!--
 
 TemplateMo 571 Hexashop
@@ -40,13 +42,14 @@ https://templatemo.com/tm-571-hexashop
               <a href="index.html" class="logo">
                 <img src="../static/Photos/White.png" style="height:65px;"/>
               </a>
+
               <!-- ***** Logo End ***** -->
               <!-- ***** Menu Start ***** -->
               <ul class="nav">
-                <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
+                <li class="scroll-to-section"><a href="{% url 'home' %}" class="active">Home</a></li>
               
                 {% if request.session.customer %}
-                <li class="scroll-to-section"><a href="#men">Orders</a></li>
+                <li class="scroll-to-section"><a href="{% url 'wishlist_view' %}">Wishlist</a></li>
                 <li class="scroll-to-section"><a href="#women">Cart</a></li>
                 <li class="scroll-to-section"><a href="#kids">Profile</a></li>
                 <li class="scroll-to-section"><a href="#kids">Logout</a></li>
@@ -87,6 +90,8 @@ https://templatemo.com/tm-571-hexashop
     <script src="/static/assets/js/slick.js"></script>
     <script src="/static/assets/js/lightbox.js"></script>
     <script src="/static/assets/js/isotope.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script><script  src="./script.js"></script>
+
 
     <!-- Global Init -->
     <script src="/static/assets/js/custom.js"></script>
@@ -106,6 +111,50 @@ https://templatemo.com/tm-571-hexashop
           }, 500);
         });
       });
+
+
+      /* Script for search */ 
+        const searchInput = document.getElementById('search-input');
+        const suggestionsDiv = document.getElementById('suggestions');
+       
+    
+        // Function to show suggestions
+        function showSuggestions() {
+            suggestionsDiv.style.display = 'block';
+        }
+    
+        // Function to hide suggestions
+        function hideSuggestions() {
+            suggestionsDiv.style.display = 'none';
+        }
+    
+        searchInput.addEventListener('input', function() {
+            const searchTerm = searchInput.value;
+            fetch(/product-suggestions/?search=${searchTerm})
+                .then(response => response.json())
+                .then(data => {
+                    suggestionsDiv.innerHTML = '';
+                    data.suggestions.forEach(suggestion => {
+                        const suggestionItem = document.createElement('div');
+                        suggestionItem.textContent = suggestion;
+                        suggestionItem.classList.add('suggestion-item');  
+                        suggestionsDiv.appendChild(suggestionItem);
+                        suggestionItem.addEventListener('click', function() {
+                            const product_name = suggestion;
+                            window.location.href = /product_details/${product_name}/;
+                        });
+                    });
+                });
+                showSuggestions();
+        });
+        document.body.addEventListener('click', function(event) {
+            const isClickInsideSearch = searchInput.contains(event.target);
+            const isClickInsideSuggestions = suggestionsDiv.contains(event.target);
+    
+            if (!isClickInsideSearch && !isClickInsideSuggestions) {
+                hideSuggestions();
+            }
+        });
     </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 from django.db import models
-from signup_login.models import Seller
+from signup_login.models import Seller , Customer
 # Create your models here.
 
 class Category(models.Model):
@@ -33,5 +33,13 @@ class Product(models.Model):
         return self.name
     
 
+
+class Wishlist(models.Model):
+    id = models.AutoField(primary_key=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, default=1)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, default=1)
+
+    def __str__(self):
+        return f"Wishlist-{self.id}"
 
 

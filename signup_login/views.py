@@ -2,6 +2,7 @@ from django.shortcuts import render , redirect
 from django.contrib.auth.models import User
 from .models import Customer
 from .models import Seller
+from django.http import HttpResponse
 
 from mainProject.models import Category,Product
 from django.contrib.auth.hashers import make_password , check_password
@@ -50,7 +51,7 @@ def signup(request):
             customer = Customer(name=name, email=email, phone=phone, password=password)
             customer.password = make_password(customer.password)
             customer.save()
-
+            request.session['cust_id'] = customer.id
         elif type == "Seller" :
             # company_name = request.POST.get('company_name')
             # data['company_name'] = company_name
@@ -58,12 +59,13 @@ def signup(request):
             # seller.password = make_password(seller.password)
             # seller.save()
             # data['page'] = "seller_auth"
-            request.session['data'] = data 
+            
             return redirect ('seller_auth')
-            return render(request,'company.html',data)
+            # return render(request,'company.html',data)
 
         data['page'] = "login"
 
+    
     return render(request,'login.html')
 
 def seller_auth(request):
@@ -78,10 +80,11 @@ def seller_auth(request):
         seller = Seller(name=name, email=email, phone=phone, password=password,company_name=company_name,proof_img=image)
         seller.password = make_password(seller.password)
         seller.save()
-
-        products = Product.objects.filter(seller_id = name )
+        request.session['id'] = seller.id
+        products = Product.objects.filter(seller_id = seller.id )
         data = {
-            "products":products
+            "products":products,
+            "seller_id" : seller.id
         }
         # request.session.pop('data', None)
         return render(request,'seller_home.html' , data)
@@ -118,7 +121,7 @@ def login(request):
             flag = check_password(password,customer.password)
             if flag:
                 # return render(request,'home.html')
-                request.session['customer'] = customer.id
+                request.session['cust_id'] = customer.id
                 return redirect('/home/')
             
         if seller and type == "Seller":
@@ -129,10 +132,12 @@ def login(request):
                 data = {
                     "products" : products
                 }
+                request.session['id'] = seller.id
                 return render(request,'seller_home.html',data)
 
         
         data["error_message"] = "Invalid Username or Password"
         data["name"] = name
         data["password"] = password
+    
     return render(request,'login.html',data)
