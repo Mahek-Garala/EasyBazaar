@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet"/>
+
+    <title>EasyBazaar</title>
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" type="text/css" href="/static/assets/css/bootstrap.min.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/static/assets/css/font-awesome.css" />
+
+    <link rel="stylesheet" href="/static/assets/css/templatemo-hexashop.css" />
+
+    <link rel="stylesheet" href="/static/assets/css/owl-carousel.css" />
+    <link rel="stylesheet" href="/static/home.css" />
+    <link rel="stylesheet" href="/static/catogery.css" />
+    <link rel="stylesheet" href="/static/search.css" />
+    <link rel="stylesheet" href="/static/table.css"/>
+
+    <!--
+
+TemplateMo 571 Hexashop
+
+https://templatemo.com/tm-571-hexashop
+
+-->
+  </head>
+
+  <body>
+    <style>  
+  
+      .suggestion-item {
+          padding: 10px;
+          cursor: pointer;
+      }
+    
+      .suggestion-item:hover {
+          background-color: #f0f0f0;
+        }
+    .search {
+      border-radius: 25px;
+      background-color: aliceblue;
+    }
+    
+    .search-box {
+      
+      
+      background-color: transparent;
+      border: none;
+    }
+    #searchbtn {
+      background-color: transparent;
+      border: none;
+      margin: 10px;
+    }
+    .search-box input[type="text"] {
+      padding: 8px;
+      outline: none;
+      outline: 0ch;
+      border: none;
+      border-radius: 4px;
+    
+      width: 300px;
+      background-color: transparent;
+    }
+  </style>
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <nav class="main-nav">
+              <!-- ***** Logo Start ***** -->
+              <a href="index.html" class="logo">
+                <img src="..../static/Photos/White.png" style="height:65px;"/>
+              </a>
+
+              <!-- ***** Logo End ***** -->
+              <!-- ***** Menu Start ***** -->
+
+              <ul class="nav">
+                <li class="scroll-to-section"><a href="{% url 'home' %}" class="active">Home</a></li> 
+                <li class="scroll-to-section"><a href="{% url 'profile_view' %}">Profile</a></li>
+                <li class="scroll-to-section"><a href="{% url 'logoutpage' %}">Logout</a></li>
+
+              </ul>
+              <!-- <a class="menu-trigger">
+                <span>Menu</span>
+              </a> -->
+              <!-- ***** Menu End ***** -->
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+
+    <!-- jQuery -->
+    <script src="/static/assets/js/jquery-2.1.0.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="/static/assets/js/popper.js"></script>
+    <script src="/static/assets/js/bootstrap.min.js"></script>
+
+    <!-- Plugins -->
+    <script src="/static/assets/js/owl-carousel.js"></script>
+    <script src="/static/assets/js/accordions.js"></script>
+    <script src="/static/assets/js/datepicker.js"></script>
+    <script src="/static/assets/js/scrollreveal.min.js"></script>
+    <script src="/static/assets/js/waypoints.min.js"></script>
+    <script src="/static/assets/js/jquery.counterup.min.js"></script>
+    <script src="/static/assets/js/imgfix.min.js"></script>
+    <script src="/static/assets/js/slick.js"></script>
+    <script src="/static/assets/js/lightbox.js"></script>
+    <script src="/static/assets/js/isotope.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script><script  src="./script.js"></script>
+
+
+    <!-- Global Init -->
+    <script src="/static/assets/js/custom.js"></script>
+
+    <script>
+      $(function () {
+        var selectedClass = "";
+        $("p").click(function () {
+          selectedClass = $(this).attr("data-rel");
+          $("#portfolio").fadeTo(50, 0.1);
+          $("#portfolio div")
+            .not("." + selectedClass)
+            .fadeOut();
+          setTimeout(function () {
+            $("." + selectedClass).fadeIn();
+            $("#portfolio").fadeTo(50, 1);
+          }, 500);
+        });
+      });
+
+
+      const searchInput = document.getElementById('search-input');
+      const suggestionsDiv = document.getElementById('suggestions');
+      
+      searchInput.addEventListener('input', function() {
+          const searchTerm = searchInput.value;
+          console.log("Search term:", searchTerm); // Add this line to log the search term
+          fetch(`/product-suggestions/?search=${searchTerm}`)
+              .then(response => response.json())
+              .then(data => {
+                  suggestionsDiv.innerHTML = '';
+                  data.suggestions.forEach(suggestion => {
+                      const suggestionItem = document.createElement('div');
+                      suggestionItem.textContent = suggestion;
+                      suggestionItem.classList.add('suggestion-item');  
+                      suggestionsDiv.appendChild(suggestionItem);
+                      suggestionItem.addEventListener('click', function() {
+                          searchInput.value = suggestion; // Set search input value to selected suggestion
+                          suggestionsDiv.innerHTML = ''; // Clear suggestions
+                      });
+                  });
+              });
+      });
+      
+    
+  </script>
+ 
+  </body>
+</html>

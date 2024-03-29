@@ -6,7 +6,7 @@ class Category(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=20)
     photo = models.ImageField(upload_to='uploads/categories')
-    desciption = models.TextField(max_length=200, default='', null=True, blank=True)
+    description = models.TextField(max_length=200, default='', null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -43,3 +43,36 @@ class Wishlist(models.Model):
         return f"Wishlist-{self.id}"
 
 
+class Cart(models.Model):
+    id = models.AutoField(primary_key=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, default=1)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, default=1)
+    stock = models.IntegerField(default = 0)
+    def __str__(self):
+         return f"-{self.customer.name}-{self.product.name}"
+
+
+
+
+# class CartItem(models.Model):
+#     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     quantity = models.PositiveIntegerField()
+
+#     def total_price(self):
+#         return self.quantity * self.product.price
+    
+
+
+
+class Order(models.Model):
+     
+    order_id = models.AutoField(primary_key= True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, default=1)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, default=1)
+    quantity = models.IntegerField(default = 0)
+    def __str__(self):
+         return f"-{self.order_id}{self.customer.name}-{self.product.name}"
+
+
+    

@@ -2,12 +2,17 @@ from django.shortcuts import render , redirect
 from django.contrib.auth.models import User
 from .models import Customer
 from .models import Seller
-
+from django.contrib.auth import logout 
 from mainProject.models import Category,Product
 from django.contrib.auth.hashers import make_password , check_password
 
 # Create your views here.
 
+
+def logoutpage(request):
+    logout(request)
+    request.session.flush()
+    return redirect('login')
 
 def signup(request):
 
@@ -51,6 +56,7 @@ def signup(request):
             customer.password = make_password(customer.password)
             customer.save()
 
+
         elif type == "Seller" :
             # company_name = request.POST.get('company_name')
             # data['company_name'] = company_name
@@ -61,6 +67,7 @@ def signup(request):
             request.session['data'] = data 
             return redirect ('seller_auth')
             # return render(request,'company.html',data)
+        
 
         data['page'] = "login"
 
@@ -78,7 +85,7 @@ def seller_auth(request):
         seller = Seller(name=name, email=email, phone=phone, password=password,company_name=company_name,proof_img=image)
         seller.password = make_password(seller.password)
         seller.save()
-
+        request.session['id'] = seller.id
         products = Product.objects.filter(seller_id = seller.id )
         data = {
             "products":products
@@ -118,18 +125,21 @@ def login(request):
             flag = check_password(password,customer.password)
             if flag:
                 # return render(request,'home.html')
-                request.session['customer'] = customer.id
+                request.session['cust_id'] = customer.id
                 return redirect('/home/')
             
         if seller and type == "Seller":
             flag = check_password(password,seller.password)
             if flag:
-                request.session['seller'] = seller.id
+                request.session['id'] = seller.id
                 products = Product.objects.filter(seller_id = seller.id )
                 data = {
                     "products" : products
                 }
                 return render(request,'seller_home.html',data)
+        if type == "Admin":
+            if name == 'admin' and password == 'admin':
+                return redirect('admin_site')
 
         
         data["error_message"] = "Invalid Username or Password"

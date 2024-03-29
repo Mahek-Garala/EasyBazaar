@@ -1,0 +1,47 @@
+{% extends 'admin.html' %}
+
+{% block content1 %}
+
+<h1 style="text-align: center;">Seller Data</h1>
+    <br>
+
+    <!-- ***** Explore Area Starts ***** -->
+    
+    <!-- Your table goes here -->
+
+
+    <table>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>User Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Company Name</th>
+          <th>Remove Button</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Sample row -->
+        {% for p in seller %}
+        <tr>
+          <td>{{p.id}}</td>
+          <td>{{p.name}}</td>
+          <td>{{p.phone}}</td>
+          <td> {{p.email}}</td>
+          <td> {{p.company_name}}</td>
+
+          <td><div class="buttons">
+            <a
+              href="{% url 'remove_seller' p.id %}"
+              class="btn btn-danger"
+              >Remove</a
+            >
+          </div></td>
+        </tr>
+        {% endfor %}
+        <!-- Add more rows as needed -->
+      </tbody>
+    </table>
+
+    {% endblock %}

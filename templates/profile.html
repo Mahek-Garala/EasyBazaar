@@ -1,0 +1,59 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container mt-5">
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-7">
+      <div class="card p-3 py-4" style="margin-top: 70px">
+        <div class="text-center mt-3">
+          <h5 class="mt-2 mb-0">{{user.name}}</h5>
+          <span>{{user.email}}</span><br />
+          <span>{{type}}</span>
+
+          <div class="px-4 mt-1">
+            <p class="fonts">
+              Here you can view your Profile . If you want to change your
+              password than click on it . <br /><i
+                >Stay Connected with EasyBazaar</i
+              >
+            </p>
+          </div>
+
+          <div class="buttons">
+            <a class="btn btn-outline-success px-4" href="{% url 'home' %}"
+              >Home</a
+            >
+            <a class="btn btn-success px-4 ms-3" id="changePasswordBtn" href="{% url 'logoutpage' %}">
+              Logout
+            </a>
+          </div>
+
+          <!-- Password change form initially hidden -->
+          
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document
+    .getElementById("changePasswordBtn")
+    .addEventListener("click", function () {
+      // Toggle visibility of password change form
+      var passwordChangeForm = document.getElementById("passwordChangeForm");
+      if (passwordChangeForm.style.display === "none") {
+        passwordChangeForm.style.display = "block";
+      } else {
+        passwordChangeForm.style.display = "none";
+      }
+    });
+
+  document
+    .getElementById("closePasswordFormBtn")
+    .addEventListener("click", function () {
+      // Close the password change form when the close button is clicked
+      var passwordChangeForm = document.getElementById("passwordChangeForm");
+      passwordChangeForm.style.display = "none";
+    });
+</script>
+
+{% endblock %}

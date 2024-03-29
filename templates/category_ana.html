@@ -1,0 +1,41 @@
+{% extends 'admin.html' %}
+
+{% block content1 %}
+
+<h1 style="text-align: center;">Category Data</h1>
+    <br>
+
+    <!-- ***** Explore Area Starts ***** -->
+    
+    <!-- Your table goes here -->
+
+
+    <table>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Category Name</th>
+          <th>Remove </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Sample row -->
+        {% for p in category %}
+        <tr>
+          <td>{{p.id}}</td>
+          <td>{{p.name}}</td>
+        
+          <td><div class="buttons">
+            <a
+              href="{% url 'remove_category' p.id %}"
+              class="btn btn-danger"
+              >Remove</a
+            >
+          </div></td>
+        </tr>
+        {% endfor %}
+        <!-- Add more rows as needed -->
+      </tbody>
+    </table>
+
+    {% endblock %}

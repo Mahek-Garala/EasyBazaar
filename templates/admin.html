@@ -1,0 +1,52 @@
+{% extends 'base_admin.html' %}
+
+{% block content %}
+    
+    <div class="buttons" style="display:flex;">
+    <div class="add-product" style="padding-left: 20px; margin-top: 120px; margin-bottom: 50px;">
+      <a href="{% url 'add_category' %}" class="btn btn-success">Add New Category <span>+</span></a>
+    </div>
+
+    <div class="add-product" style="padding-left: 20px; margin-top: 120px; margin-bottom: 50px;">
+        <a href="{% url 'product_ana' %}" class="btn btn-success">Product </a>
+      </div>
+
+    <div class="add-product" style="padding-left: 20px; margin-top: 120px; margin-bottom: 50px;">
+        <a href="{% url 'category_ana'  %}" class="btn btn-success">Category </a>
+      </div>
+
+      <div class="add-product" style="padding-left: 20px; margin-top: 120px; margin-bottom: 50px;">
+        <a href="{% url 'user_ana'  %}" class="btn btn-success">User</a>
+      </div>
+
+      <div class="add-product" style="padding-left: 20px; margin-top: 120px; margin-bottom: 50px;">
+        <a href="{% url 'seller_ana'  %}" class="btn btn-success">Seller</a>
+      </div>
+
+    </div>
+
+
+    {% block content1 %}
+    {% endblock %}
+
+
+    
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="under-footer">
+              <div class="logo">
+                <img src="/static/assets/images/white-logo.png" alt="hexashop ecommerce templatemo" />
+              </div>
+              <p>
+                Copyright © 2024 EasyBazaar Ltd. All Rights Reserved.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+{% endblock %}

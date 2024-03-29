@@ -32,11 +32,16 @@ from django.contrib import admin
 from django.urls import path  , include
 from django.conf.urls.static import static
 from . import settings
+from mainProject import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('' , include('signup_login.urls')),
     path('home/' , include('mainProject.urls')),
+    path('product-suggestions/', views.product_suggestions, name='product-suggestions'),
+    path('product_show/<str:product_name>/',views.product_show,name='product_show'),
+
+
 
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
