@@ -30,7 +30,10 @@ urlpatterns = [
     path('remove_user/<int:user_id>/' , views.remove_user , name = 'remove_user'),
     path('remove_seller/<int:seller_id>/' , views.remove_seller , name = 'remove_seller'),
     path('add_category/' , views.add_category , name = 'add_category'),
-    path('profile/' , views.profile_view , name = 'profile_view') , 
+    path('profile/' , views.profile_view , name = 'profile_view') ,
+    path('admin_home/' , views.admin_home , name = 'admin_home') , 
+    path('admin_home/' , views.admin_home , name = 'admin_home') , 
+    path('profile_seller/' , views.profile_seller , name = 'profile_seller')
 
 ]
 
