@@ -330,7 +330,8 @@ def payment(request):
         p.product.stock = p.product.stock -  p.stock
         p.product.save()
         product = get_object_or_404(Product, id= p.product.id)
-        new_order = Order(product = product , customer = customer , quantity = p.stock )
+        date = datetime.date.today()
+        new_order = Order(product = product , customer = customer , quantity = p.stock , date = date )
         new_order.save()
         p.delete()
 
@@ -339,8 +340,7 @@ def payment(request):
 
 
     data = {
-        "products" : products,
-        "date" : datetime.date.today()
+        "products" : products
 
     }
     return render(request,'view_order.html', data)

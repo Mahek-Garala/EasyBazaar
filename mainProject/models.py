@@ -65,14 +65,17 @@ class Cart(models.Model):
 
 
 
+
+
 class Order(models.Model):
-     
-    order_id = models.AutoField(primary_key= True)
+    order_id = models.AutoField(primary_key=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, default=1)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, default=1)
-    quantity = models.IntegerField(default = 0)
+    quantity = models.IntegerField(default=0)
+    date = models.DateField()  # New field for the date without auto_now_add
+    
     def __str__(self):
-         return f"-{self.order_id}{self.customer.name}-{self.product.name}"
+        return f"-{self.order_id}{self.customer.name}-{self.product.name}"
 
 
     
