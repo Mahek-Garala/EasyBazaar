@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import get_object_or_404, render,redirect
 from .models import Category,Product,Seller , Wishlist , Customer , Cart , Order
 from signup_login import views
@@ -12,6 +13,8 @@ def home(request):
         "categories":categories
     }
     return render(request,'home.html',data)
+
+
 
 #///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -336,7 +339,8 @@ def payment(request):
 
 
     data = {
-        "products" : products
+        "products" : products,
+        "date" : datetime.date.today()
 
     }
     return render(request,'view_order.html', data)
@@ -360,6 +364,11 @@ def order_view(request):
 #///////////////////////////////////////////////////////////////////////////////////////////////////
 
 def admin_site(request):
+    
+    return render(request , 'admin.html' )
+
+
+def admin_home(request):
     
     return render(request , 'admin.html' )
 
@@ -469,6 +478,25 @@ def profile_view(request):
     return render(request , 'profile.html' , data)
 
 
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.hashers import check_password
+def profile_seller(request):
+    cust = request.session.get('cust_id')
+    sell = request.session.get('id')
+
+    data = {
+        'user' : "" ,
+        'type' : ""
+    }
+    if cust : 
+        customer = get_object_or_404(Customer, id= cust)
+        data['user'] = customer
+        data['type'] = "Customer"
+
+    elif sell :
+        seller = get_object_or_404(Seller, id= sell)
+        data['user'] = seller
+        data['type'] = "Seller"
+
+    return render(request , 'profile_seller.html' , data)
+
+
 
