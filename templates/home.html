@@ -70,7 +70,7 @@
           <!-- single features -->
           <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="single-features">
-              <div class="f-icon">
+              <div class="f-icon" style="margin-left:100px">
                 <img src="../static/Photos/icon1.png" alt="">
               </div>
               <h6>Free Delivery</h6>
@@ -80,7 +80,7 @@
           <!-- single features -->
           <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="single-features">
-              <div class="f-icon">
+              <div class="f-icon" style="margin-left:100px">
                 <img src="../static/Photos/icon2.png" alt="">
               </div>
               <h6>Return Policy</h6>
@@ -90,7 +90,7 @@
           <!-- single features -->
           <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="single-features">
-              <div class="f-icon">
+              <div class="f-icon" style="margin-left:100px">
                 <img src="../static/Photos/icon3.png" alt="">
               </div>
               <h6>24/7 Support</h6>
@@ -100,7 +100,7 @@
           <!-- single features -->
           <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="single-features">
-              <div class="f-icon">
+              <div class="f-icon" style="margin-left:100px">
                 <img src="../static/Photos/icon4.png" alt="">
               </div>
               <h6>Secure Payment</h6>
@@ -182,23 +182,31 @@
     <!-- ***** Explore Area Starts ***** -->
 
     <footer>
-      <div class="container">
+      <div class="container" >
         <div class="row">
           <div class="col-lg-12">
-            <div class="under-footer">
+            <div class="under-footer" style="display:flex">
               <div class="logo">
-                <img
-                  src="/static/assets/images/white-logo.png"
-                  alt="hexashop ecommerce templatemo"
-                />
+                <img src="/static/Photos/White.png" alt="hexashop ecommerce templatemo" style="height: 75px;">
               </div>
-              <p>
-                Copyright © 2024 EasyBazaar Ltd. All Rights Reserved.
-              </p>
-             </div>
+              
+              <div class="footer-links" style="margin-left : 90px;">
+                <ul>
+                  <li><a href="{% url 'home' %}">Home</a></li>
+                  <li><a href="#">About Us</a></li>
+                  <li><a href="#top">Products</a></li>
+                  <li><a href="{% url 'profile_view' %}">Your Profile</a></li>
+                </ul>
+              </div>
+            </div>
+            <hr>
+            <p class="copyright">
+              &copy; 2024 EasyBazaar Ltd. All Rights Reserved.
+            </p>
           </div>
         </div>
       </div>
     </footer>
+    
 
     {% endblock %}

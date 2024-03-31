@@ -33,7 +33,8 @@ urlpatterns = [
     path('profile/' , views.profile_view , name = 'profile_view') ,
     path('admin_home/' , views.admin_home , name = 'admin_home') , 
     path('admin_home/' , views.admin_home , name = 'admin_home') , 
-    path('profile_seller/' , views.profile_seller , name = 'profile_seller')
+    path('profile_seller/' , views.profile_seller , name = 'profile_seller') , 
+    path('seller_sales/',views.seller_sales , name = 'seller_sales')
 
 ]
 

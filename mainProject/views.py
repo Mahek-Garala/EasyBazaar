@@ -50,10 +50,12 @@ def update_product(request, product_id):
         p.name = request.POST.get('name')
         p.price = request.POST.get('price')
         p.description = request.POST.get('description')
-        p.categoryategory = request.POST.get('category')
+        p.category = request.POST.get('category')
         p.stock = request.POST.get('stock')
         p.availability = request.POST.get('availability')
         p.subcategory = request.POST.get('subcategory')
+        p.image = request.FILES.get('image')
+
         p.save()
 
         products = Product.objects.filter(seller_id = request.session['id'])
@@ -502,6 +504,31 @@ def profile_seller(request):
         data['type'] = "Seller"
 
     return render(request , 'profile_seller.html' , data)
+
+
+
+
+from django.shortcuts import get_object_or_404, render
+from .models import Seller, Product, Order
+
+def seller_sales(request):
+    seller_id = request.session.get('id')
+    seller = get_object_or_404(Seller, id=seller_id)
+
+    products = Product.objects.filter(seller_id=seller)
+
+    # Now you have a queryset of products associated with the seller
+    # You can iterate over them to perform any further operations if needed
+    in_order_products = []
+    for product in products:
+        in_order_product = Order.objects.filter(product=product)
+        in_order_products.extend(in_order_product)
+
+    data = {
+        "in_order_products": in_order_products
+    }
+
+    return render(request, 'seller_sales.html', data)
 
 
 
