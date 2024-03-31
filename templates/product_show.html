@@ -14,9 +14,10 @@
         style="height : 350px; width =  336px ; "
       />
       <div class="product-info">
-        <h3>{{p.name}}</h3>
+        <h3>{{p.name}}({{p.subcategory}})</h3>
         <p class="price">{{p.price}}</p>
-        <p class="description">{{p.description}}</p>
+        <p>{{p.seller_id.company_name}}</p>
+        <p class="description" style="height:155px ; margin-top:0">{{p.description}}</p>
       </div>
       <div class="actions">
         

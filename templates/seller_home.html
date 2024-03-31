@@ -13,10 +13,10 @@
           <div class="product-card">
               <img src="{{p.image.url}}" alt="Product Image" style = "height : 350px; width =  336px ; " />
               <div class="product-info">
-                  <h3>{{p.name}}</h3>
+                  <h3>{{p.name}}({{p.subcategory}})</h3>
                   <p class="price">{{p.price}}</p>
                   <p> Available Quantity = {{p.stock}}
-                  <p class="description">
+                  <p class="description" style="height:155px ; margin-top:0" >
                       {{p.description}}
                   </p>
                   <!-- Update and Delete buttons -->

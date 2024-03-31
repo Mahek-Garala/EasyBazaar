@@ -13,11 +13,12 @@
         style="height : 350px; width =  336px ; "
       />
       <div class="product-info">
-        <h3>{{p.product.name}}</h3>
+        <h3>{{p.product.name}}({{p.product.subcategory}})</h3>
         <p class="price">{{p.product.price}}</p>
+        <p>{{p.product.seller_id.company_name}}</p>
         <p> Date = {{p.date}}</p>
         <p>Quantity = {{p.quantity}}</p>
-        <p class="description">{{p.product.description}}</p>
+        <p class="description" style="height:155px ; margin-top:0" >{{p.product.description}}</p>
       </div>
     </div>
     {% endfor %}

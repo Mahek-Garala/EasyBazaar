@@ -2,21 +2,35 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - Animated Search Box</title>
-  <link rel="stylesheet" href="./style.css">
+  <title>CodePen - Social Media Icons Popups</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css'><link rel="stylesheet" href="./style.css">
 
 </head>
 <body>
 <!-- partial:index.partial.html -->
-<div class="search-wrapper">
-    <div class="input-holder">
-        <input type="text" class="search-input" placeholder="Type to search" />
-        <button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>
-    </div>
-    <span class="close" onclick="searchToggle(this, event);"></span>
-</div>
+<ul class="wrapper">
+  <li class="icon facebook">
+    <span class="tooltip">Facebook</span>
+    <span><i class="fab fa-facebook-f"></i></span>
+  </li>
+  <li class="icon twitter">
+    <span class="tooltip">Twitter</span>
+    <span><i class="fab fa-x-twitter"></i></span>
+  </li>
+  <li class="icon instagram">
+    <span class="tooltip">Instagram</span>
+    <span><i class="fab fa-instagram"></i></span>
+  </li>
+  <li class="icon github">
+    <span class="tooltip">Github</span>
+    <span><i class="fab fa-github"></i></span>
+  </li>
+  <li class="icon youtube">
+    <span class="tooltip">Youtube</span>
+    <span><i class="fab fa-youtube"></i></span>
+  </li>
+</ul>
 <!-- partial -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script><script  src="./script.js"></script>
-
+  
 </body>
 </html>

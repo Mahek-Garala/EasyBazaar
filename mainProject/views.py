@@ -290,6 +290,8 @@ def decrease_quantity(request, product_id):
 
 
 def buyProduct(request ):
+
+    
     cust_id = request.session.get('cust_id')
     customer = get_object_or_404(Customer, id=cust_id)
     products = Cart.objects.filter(customer=customer) 
@@ -313,6 +315,9 @@ def buyProduct(request ):
         
     
     total_price = sum(item.product.price * item.stock for item in products)
+    if total_price == 0 : 
+        data['error_message'] = "Your Cart is empty"
+        return render(request ,'cart.html' , data )
     data['total_price'] = total_price 
     return render(request, 'payment.html' , data)  
 
@@ -453,7 +458,7 @@ def add_category(request):
         )
         new_category.save()
 
-        return render(request , 'admin.html')
+        return redirect('admin_home')
     return render(request, 'add_category.html')
 
 
