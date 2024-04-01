@@ -320,7 +320,7 @@ def update_product(request, product_id):
         category = request.POST.get('category')
         p.category = Category.objects.get(name = category)
         p.stock = request.POST.get('stock')
-        p.availability = request.POST.get('availability')
+        # p.availability = request.POST.get('availability')
         p.subcategory = request.POST.get('subcategory')
         p.image = request.FILES.get('image')
 
@@ -352,7 +352,7 @@ def add_product(request):
         description = request.POST.get('description')
         category_name = request.POST.get('category')
         stock = request.POST.get('stock')
-        availability = request.POST.get('availability') == 'available'
+        # availability = request.POST.get('availability')
         subcategory = request.POST.get('subcategory')
         image = request.FILES.get('image')
         
@@ -369,7 +369,7 @@ def add_product(request):
             category= category,
             stock=stock,
             seller_id = seller , 
-            available=availability,
+            # available=availability,
             subcategory=subcategory,
             image=image
         )
