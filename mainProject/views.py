@@ -4,8 +4,14 @@ from .models import Category,Product,Seller , Wishlist , Customer , Cart , Order
 from signup_login import views
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.hashers import make_password , check_password
+from django.http import JsonResponse
 
+from django.shortcuts import get_object_or_404, render
+from .models import Seller, Product, Order
 # Create your views here.
+
+
+# --------------------------------------------Customer---------------------------------
 
 def home(request):
     categories = Category.objects.all()
@@ -15,8 +21,207 @@ def home(request):
     return render(request,'home.html',data)
 
 
+def wishlist(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    customer = get_object_or_404(Customer, id=request.session.get('cust_id'))
+    cat=product.category
+    cat_id=cat.id
 
-#///////////////////////////////////////////////////////////////////////////////////////////////
+    in_wishlist = Wishlist.objects.filter(product=product, customer=customer).exists()
+    if not in_wishlist:
+        new_wishlist = Wishlist(product=product, customer=customer)
+        new_wishlist.save()
+
+    products = Product.objects.filter(category=cat_id)
+    data = {
+        "products":products,
+        "in_wishlist": in_wishlist
+    }
+    return render(request,'category.html',data)
+
+def wishlist_view(request):
+
+    cust_id = request.session.get('cust_id')
+    customer = Customer(id = cust_id)
+    products = Wishlist.objects.filter(customer = customer) 
+   
+    return render(request , 'wishlist.html' , {'products' : products})
+
+
+def remove_from_wishlist(request , product_id):
+
+    cust_id = request.session.get('cust_id')
+    customer = Customer(id = cust_id)
+    product = Product(id = product_id)
+    products = Wishlist.objects.filter(customer = customer , product = product)
+    products.delete()
+    remaining_products = Wishlist.objects.filter(customer = customer)
+
+    
+    return render(request , 'wishlist.html' , {'products' : remaining_products})
+
+
+def search_product(request):
+    data = {}
+    if request.method == 'POST' :
+        search_input = request.POST.get('search_input')
+        data['search_input'] = search_input
+        products = Product.objects.filter(name__contains = search_input)
+        if products :
+            data['products'] = products
+            return render (request,'category.html',data)
+        else:
+            return redirect('home')
+
+
+def cart(request , product_id):
+    product = get_object_or_404(Product, id=product_id)
+    customer = get_object_or_404(Customer, id=request.session.get('cust_id'))
+    cat=product.category
+    cat_id=cat.id
+
+    in_cart = Cart.objects.filter(product=product, customer=customer).exists()
+    if not in_cart:
+        new_cart = Cart(product=product, customer=customer)
+        new_cart.stock += 1 
+        new_cart.save()
+
+    products = Product.objects.filter(category=cat_id)
+    data = {
+        "products":products,
+        "in_cart": in_cart
+    }
+    return render(request,'category.html',data )
+
+
+def cart_view(request):
+
+    cust_id = request.session.get('cust_id')
+    customer = Customer(id = cust_id)
+    products = Cart.objects.filter(customer = customer) 
+    total_price = sum(item.product.price * item.stock for item in products)
+    data = { 
+        
+    }
+   
+    return render(request , 'cart.html' , {'products' : products , 'total_price' : total_price})
+
+
+
+def remove_from_cart(request , product_id):
+
+    cust_id = request.session.get('cust_id')
+    customer = Customer(id = cust_id)
+    product = Product(id = product_id)
+    products = Cart.objects.filter(customer = customer , product = product)
+    products.delete()
+    remaining_products = Cart.objects.filter(customer = customer)
+
+    
+    products = Cart.objects.filter(customer = customer) 
+    total_price = sum(item.product.price * item.stock for item in remaining_products)
+    return render(request , 'cart.html' , {'products' : remaining_products , 'total_price' : total_price})
+
+
+
+def increase_quantity(request, product_id):
+    cust_id = request.session.get('cust_id')
+    product = get_object_or_404(Product, id = product_id)
+    customer = get_object_or_404(Customer, id = cust_id)
+    cart_item = get_object_or_404(Cart, product=product, customer = customer)
+    cart_item.stock += 1
+    
+    cart_item.save()
+    return redirect('cart_view')
+
+def decrease_quantity(request, product_id):
+    cust_id = request.session.get('cust_id')
+    product = get_object_or_404(Product, id = product_id)
+    customer = get_object_or_404(Customer, id = cust_id)
+    cart_item = get_object_or_404(Cart, product=product, customer = customer)
+    if cart_item.stock > 1:
+        cart_item.stock -= 1
+        cart_item.save()
+    return redirect('cart_view')
+
+
+
+
+def buyProduct(request ):
+
+    
+    cust_id = request.session.get('cust_id')
+    customer = get_object_or_404(Customer, id=cust_id)
+    products = Cart.objects.filter(customer=customer) 
+
+    data = { 
+        "error_message": "",
+        "products" : products , 
+        "total_price" : ""
+    }
+    
+    for cart_item in products:
+
+        if cart_item.product.available != True:
+            product = get_object_or_404(Product, id=cart_item.product.id)
+            data['error_message'] = f"{product.name} is not available"
+            return render(request, 'cart.html', data)
+        elif cart_item.stock > cart_item.product.stock:
+            product = get_object_or_404(Product, id=cart_item.product.id)
+            data['error_message'] = f"{product.name}'s quantity is more than available stock"
+            return render(request, 'cart.html', data)
+        
+    
+    total_price = sum(item.product.price * item.stock for item in products)
+    if total_price == 0 : 
+        data['error_message'] = "Your Cart is empty"
+        return render(request ,'cart.html' , data )
+    data['total_price'] = total_price 
+    return render(request, 'payment.html' , data)  
+
+
+def payment(request):
+
+    cust_id = request.session.get('cust_id')
+    customer = get_object_or_404(Customer, id=cust_id)
+    products = Cart.objects.filter(customer=customer) 
+    total_price = sum(item.product.price * item.stock for item in products)
+
+    for p in products:
+        p.product.stock = p.product.stock -  p.stock
+        p.product.save()
+        product = get_object_or_404(Product, id= p.product.id)
+        date = datetime.date.today()
+        new_order = Order(product = product , customer = customer , quantity = p.stock , date = date )
+        new_order.save()
+        p.delete()
+
+    products = Order.objects.filter(customer=customer) 
+
+
+
+    data = {
+        "products" : products
+
+    }
+    return render(request,'view_order.html', data)
+
+
+
+def order_view(request):
+
+    cust_id = request.session.get('cust_id')
+    customer = get_object_or_404(Customer, id=cust_id)
+
+    products = Order.objects.filter(customer=customer) 
+    data = {
+        "products" : products
+
+    }
+    return render(request,'view_order.html', data)
+
+
+
 
 def show_product(request, category_id):
     products = Product.objects.filter(category=category_id)
@@ -40,8 +245,70 @@ def show_product(request, category_id):
     }
     return render(request, 'category.html', data)
 
+def profile_view(request):
+    cust = request.session.get('cust_id')
+    sell = request.session.get('id')
 
-#//////////////////////////////////////////////////////////////////////////////////////////////
+    data = {
+        'user' : "" ,
+        'type' : ""
+    }
+    if cust : 
+        customer = get_object_or_404(Customer, id= cust)
+        data['user'] = customer
+        data['type'] = "Customer"
+
+    elif sell :
+        seller = get_object_or_404(Seller, id= sell)
+        data['user'] = seller
+        data['type'] = "Seller"
+
+    return render(request , 'profile.html' , data)
+
+
+
+# ------------------------------------------------- Seller -------------------------------------------------------
+def profile_seller(request):
+    cust = request.session.get('cust_id')
+    sell = request.session.get('id')
+
+    data = {
+        'user' : "" ,
+        'type' : ""
+    }
+    if cust : 
+        customer = get_object_or_404(Customer, id= cust)
+        data['user'] = customer
+        data['type'] = "Customer"
+
+    elif sell :
+        seller = get_object_or_404(Seller, id= sell)
+        data['user'] = seller
+        data['type'] = "Seller"
+
+    return render(request , 'profile_seller.html' , data)
+
+
+
+
+
+def seller_sales(request):
+    seller_id = request.session.get('id')
+    seller = get_object_or_404(Seller, id=seller_id)
+
+    products = Product.objects.filter(seller_id=seller)
+    in_order_products = []
+    for product in products:
+        in_order_product = Order.objects.filter(product=product)
+        in_order_products.extend(in_order_product)
+
+    data = {
+        "in_order_products": in_order_products
+    }
+
+    return render(request, 'seller_sales.html', data)
+
+
 
 def update_product(request, product_id):
 
@@ -50,7 +317,8 @@ def update_product(request, product_id):
         p.name = request.POST.get('name')
         p.price = request.POST.get('price')
         p.description = request.POST.get('description')
-        p.category = request.POST.get('category')
+        category = request.POST.get('category')
+        p.category = Category.objects.get(name = category)
         p.stock = request.POST.get('stock')
         p.availability = request.POST.get('availability')
         p.subcategory = request.POST.get('subcategory')
@@ -69,17 +337,11 @@ def update_product(request, product_id):
     }
     return render(request, 'update.html', data )
 
-#//////////////////////////////////////////////////////////////////////////////////////////////
-
 
 def delete_product(request , product_id):
    product = get_object_or_404(Product, id=product_id)
    product.delete()
    return redirect('seller_home') 
-
-
-#//////////////////////////////////////////////////////////////////////////////////////////////
-
 
 
 def add_product(request):
@@ -121,9 +383,6 @@ def add_product(request):
     return render(request, 'add_product.html' , data)
 
 
-#//////////////////////////////////////////////////////////////////////////////////////////////
-
-
 def seller_home(request):
     products = Product.objects.filter(seller_id = request.session.get('id') )
     data = {
@@ -133,242 +392,8 @@ def seller_home(request):
     return render(request , 'seller_home.html' , data)
 
 
-#//////////////////////////////////////////////////////////////////////////////////////////////
 
-
-def wishlist(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    customer = get_object_or_404(Customer, id=request.session.get('cust_id'))
-    cat=product.category
-    cat_id=cat.id
-
-    in_wishlist = Wishlist.objects.filter(product=product, customer=customer).exists()
-    if not in_wishlist:
-        new_wishlist = Wishlist(product=product, customer=customer)
-        new_wishlist.save()
-
-    products = Product.objects.filter(category=cat_id)
-    data = {
-        "products":products,
-        "in_wishlist": in_wishlist
-    }
-    return render(request,'category.html',data)
-
-    
-#//////////////////////////////////////////////////////////////////////////////////////////////
-
-
-def wishlist_view(request):
-
-    cust_id = request.session.get('cust_id')
-    customer = Customer(id = cust_id)
-    products = Wishlist.objects.filter(customer = customer) 
-   
-    return render(request , 'wishlist.html' , {'products' : products})
-
-
-#//////////////////////////////////////////////////////////////////////////////////////////////
-
-
-def remove_from_wishlist(request , product_id):
-
-    cust_id = request.session.get('cust_id')
-    customer = Customer(id = cust_id)
-    product = Product(id = product_id)
-    products = Wishlist.objects.filter(customer = customer , product = product)
-    remaining_products = Wishlist.objects.filter(customer = customer)
-
-    products.delete()
-    return render(request , 'wishlist.html' , {'products' : remaining_products})
-
-
-#//////////////////////////////////////////////////////////////////////////////////////////////
-
-from django.http import JsonResponse
-
-def product_suggestions(request):
-    print("hello")
-    if request.method == 'GET' and 'search' in request.GET:
-        search_term = request.GET.get('search')
-        print("Received search term:", search_term)
-        try:
-            products = Product.objects.filter(name__icontains=search_term)[:10]
-            suggestions = [product.name for product in products]
-            
-            return JsonResponse({'suggestions': suggestions})
-        except Exception as e:
-            print("Error:", e)
-            return JsonResponse({'error': 'An error occurred while fetching suggestions'}, status=500)
-    else:
-        return JsonResponse({'error': 'No search term provided or invalid request'}, status=400)
-
-def product_show(request, product_name):
-    print("product_show called")
-    product = get_object_or_404(Product, name=product_name)
-    data = {
-        'products': [product]  # Wrap the product in a list
-    }
-    return render(request, 'product_show.html', data)
-
-#//////////////////////////////////////////////////////////////////////////////////////////////
-def cart(request , product_id):
-    product = get_object_or_404(Product, id=product_id)
-    customer = get_object_or_404(Customer, id=request.session.get('cust_id'))
-    cat=product.category
-    cat_id=cat.id
-
-    in_cart = Cart.objects.filter(product=product, customer=customer).exists()
-    if not in_cart:
-        new_cart = Cart(product=product, customer=customer)
-        new_cart.stock += 1 
-        new_cart.save()
-
-    products = Product.objects.filter(category=cat_id)
-    data = {
-        "products":products,
-        "in_cart": in_cart
-    }
-    return render(request,'category.html',data )
-
-#//////////////////////////////////////////////////////////////////////////////////////////////
-
-
-def cart_view(request):
-
-    cust_id = request.session.get('cust_id')
-    customer = Customer(id = cust_id)
-    products = Cart.objects.filter(customer = customer) 
-    total_price = sum(item.product.price * item.stock for item in products)
-    data = { 
-        
-    }
-   
-    return render(request , 'cart.html' , {'products' : products , 'total_price' : total_price})
-
-#//////////////////////////////////////////////////////////////////////////////////////////////
-
-
-def remove_from_cart(request , product_id):
-
-    cust_id = request.session.get('cust_id')
-    customer = Customer(id = cust_id)
-    product = Product(id = product_id)
-    products = Cart.objects.filter(customer = customer , product = product)
-    remaining_products = Cart.objects.filter(customer = customer)
-
-
-
-    products.delete()
-    cust_id = request.session.get('cust_id')
-    customer = Customer(id = cust_id)
-    products = Cart.objects.filter(customer = customer) 
-    total_price = sum(item.product.price * item.stock for item in products)
-    return render(request , 'cart.html' , {'products' : remaining_products , 'total_price' : total_price})
-
-#///////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-def increase_quantity(request, product_id):
-    cust_id = request.session.get('cust_id')
-    product = get_object_or_404(Product, id = product_id)
-    customer = get_object_or_404(Customer, id = cust_id)
-    cart_item = get_object_or_404(Cart, product=product, customer = customer)
-    cart_item.stock += 1
-    cart_item.save()
-    return redirect('cart_view')
-
-def decrease_quantity(request, product_id):
-    cust_id = request.session.get('cust_id')
-    product = get_object_or_404(Product, id = product_id)
-    customer = get_object_or_404(Customer, id = cust_id)
-    cart_item = get_object_or_404(Cart, product=product, customer = customer)
-    if cart_item.stock > 1:
-        cart_item.stock -= 1
-        cart_item.save()
-    return redirect('cart_view')
-
-
-#///////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-def buyProduct(request ):
-
-    
-    cust_id = request.session.get('cust_id')
-    customer = get_object_or_404(Customer, id=cust_id)
-    products = Cart.objects.filter(customer=customer) 
-
-    data = { 
-        "error_message": "",
-        "products" : products , 
-        "total_price" : ""
-    }
-    
-    for cart_item in products:
-
-        if cart_item.product.available != True:
-            product = get_object_or_404(Product, id=cart_item.product.id)
-            data['error_message'] = f"{product.name} is not available"
-            return render(request, 'cart.html', data)
-        elif cart_item.stock > cart_item.product.stock:
-            product = get_object_or_404(Product, id=cart_item.product.id)
-            data['error_message'] = f"{product.name}'s quantity is more than available stock"
-            return render(request, 'cart.html', data)
-        
-    
-    total_price = sum(item.product.price * item.stock for item in products)
-    if total_price == 0 : 
-        data['error_message'] = "Your Cart is empty"
-        return render(request ,'cart.html' , data )
-    data['total_price'] = total_price 
-    return render(request, 'payment.html' , data)  
-
-#///////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-def payment(request):
-
-    cust_id = request.session.get('cust_id')
-    customer = get_object_or_404(Customer, id=cust_id)
-    products = Cart.objects.filter(customer=customer) 
-    total_price = sum(item.product.price * item.stock for item in products)
-
-    for p in products:
-        p.product.stock = p.product.stock -  p.stock
-        p.product.save()
-        product = get_object_or_404(Product, id= p.product.id)
-        date = datetime.date.today()
-        new_order = Order(product = product , customer = customer , quantity = p.stock , date = date )
-        new_order.save()
-        p.delete()
-
-    products = Order.objects.filter(customer=customer) 
-
-
-
-    data = {
-        "products" : products
-
-    }
-    return render(request,'view_order.html', data)
-
-
-
-#///////////////////////////////////////////////////////////////////////////////////////////////////
-
-def order_view(request):
-
-    cust_id = request.session.get('cust_id')
-    customer = get_object_or_404(Customer, id=cust_id)
-
-    products = Order.objects.filter(customer=customer) 
-    data = {
-        "products" : products
-
-    }
-    return render(request,'view_order.html', data)
-
-#///////////////////////////////////////////////////////////////////////////////////////////////////
+# --------------------------------------------------- Admin ---------------------------------------------------------
 
 def admin_site(request):
     
@@ -464,71 +489,6 @@ def add_category(request):
     return render(request, 'add_category.html')
 
 
-def profile_view(request):
-    cust = request.session.get('cust_id')
-    sell = request.session.get('id')
-
-    data = {
-        'user' : "" ,
-        'type' : ""
-    }
-    if cust : 
-        customer = get_object_or_404(Customer, id= cust)
-        data['user'] = customer
-        data['type'] = "Customer"
-
-    elif sell :
-        seller = get_object_or_404(Seller, id= sell)
-        data['user'] = seller
-        data['type'] = "Seller"
-
-    return render(request , 'profile.html' , data)
-
-
-def profile_seller(request):
-    cust = request.session.get('cust_id')
-    sell = request.session.get('id')
-
-    data = {
-        'user' : "" ,
-        'type' : ""
-    }
-    if cust : 
-        customer = get_object_or_404(Customer, id= cust)
-        data['user'] = customer
-        data['type'] = "Customer"
-
-    elif sell :
-        seller = get_object_or_404(Seller, id= sell)
-        data['user'] = seller
-        data['type'] = "Seller"
-
-    return render(request , 'profile_seller.html' , data)
-
-
-
-
-from django.shortcuts import get_object_or_404, render
-from .models import Seller, Product, Order
-
-def seller_sales(request):
-    seller_id = request.session.get('id')
-    seller = get_object_or_404(Seller, id=seller_id)
-
-    products = Product.objects.filter(seller_id=seller)
-
-    # Now you have a queryset of products associated with the seller
-    # You can iterate over them to perform any further operations if needed
-    in_order_products = []
-    for product in products:
-        in_order_product = Order.objects.filter(product=product)
-        in_order_products.extend(in_order_product)
-
-    data = {
-        "in_order_products": in_order_products
-    }
-
-    return render(request, 'seller_sales.html', data)
 
 
 

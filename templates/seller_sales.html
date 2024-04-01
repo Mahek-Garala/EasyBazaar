@@ -1,17 +1,10 @@
 {% extends 'base_seller.html' %}
 {% block content %}
 
-    
-    
-    <div class="add-product" style = "padding-left : 20px; margin-top : 120px; margin-bottom : 50px;">
-      <a href="{% url 'add_product' %}" class="btn btn-success">Add New Product <span>+</span></a>
-
-      <a href="{% url 'seller_sales' %}" class="btn btn-success">Sales Analysis </a>
-    </div>
 
 
 
-    <table>
+    <table style="margin-top : 120px">
         <thead>
           <tr>
             
@@ -47,10 +40,7 @@
           <div class="col-lg-12">
             <div class="under-footer">
               <div class="logo">
-                <img
-                  src="/static/assets/images/white-logo.png"
-                  alt="hexashop ecommerce templatemo"
-                />
+                <img src="/static/Photos/White.png" alt="hexashop ecommerce templatemo" style="height: 75px;">
               </div>
               <p>
                 Copyright © 2024 EasyBazaar Ltd. All Rights Reserved.
@@ -62,6 +52,10 @@
     </footer>
 
 
-
+  <script type = "text/javascript" >
+    function preventBack(){window.history.forward();}
+    setTimeout("preventBack()", 0);
+    window.onunload=function(){null};
+</script>
     
     {% endblock %}

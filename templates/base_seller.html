@@ -88,6 +88,8 @@ https://templatemo.com/tm-571-hexashop
 
               <ul class="nav">
                 <li class="scroll-to-section"><a href="{% url 'seller_home' %}" class="active">Home</a></li> 
+                <li class="scroll-to-section"><a href="{% url 'add_product' %}">Add New Product</a></li>
+                <li class="scroll-to-section"><a href="{% url 'seller_sales' %}">Sales Analysis</a></li>
                 <li class="scroll-to-section"><a href="{% url 'profile_seller' %}">Profile</a></li>
                 <li class="scroll-to-section"><a href="{% url 'logoutpage' %}">Logout</a></li>
 
@@ -172,6 +174,12 @@ https://templatemo.com/tm-571-hexashop
       
     
   </script>
+
+<script type = "text/javascript" >
+  function preventBack(){window.history.forward();}
+  setTimeout("preventBack()", 0);
+  window.onunload=function(){null};
+</script>
  
   </body>
 </html>

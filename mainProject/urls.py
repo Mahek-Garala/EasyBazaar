@@ -3,12 +3,11 @@ from django.urls import path , include
 # from signup_login import views 
 from . import views;
 urlpatterns = [
+
+
+    #Customer 
     path('',views.home , name = 'home'),
     path('category/<int:category_id>/', views.show_product, name='show_product'),
-    path('update/<int:product_id>/', views.update_product, name='update_product'),
-    path('delete/<int:product_id>/', views.delete_product, name='delete_product'),
-    path('addProduct/' , views.add_product , name = 'add_product'),
-    path('seller_home/' , views.seller_home , name = 'seller_home'),
     path('wishlist/<int:product_id>/' , views.wishlist , name = 'wishlist' ),
     path('wishlist_view/' , views.wishlist_view , name = 'wishlist_view'),
     path('remove_wishlist/<int:product_id>' , views.remove_from_wishlist , name = 'remove_from_wishlist'),
@@ -20,6 +19,21 @@ urlpatterns = [
     path('buyProduct/' , views.buyProduct , name = 'buyProduct'),
     path('payment/' , views.payment , name = 'payment'),
     path('order_view/' , views.order_view , name = 'order_view'),
+    path('profile/' , views.profile_view , name = 'profile_view') ,
+
+    path('search_product/' , views.search_product , name = 'search_product'),
+
+    #Seller 
+    path('update/<int:product_id>/', views.update_product, name='update_product'),
+    path('delete/<int:product_id>/', views.delete_product, name='delete_product'),
+    path('addProduct/' , views.add_product , name = 'add_product'),
+    path('seller_home/' , views.seller_home , name = 'seller_home'),
+    path('profile_seller/' , views.profile_seller , name = 'profile_seller') , 
+    path('seller_sales/',views.seller_sales , name = 'seller_sales'),
+
+
+    #admin
+    path('admin_home/' , views.admin_home , name = 'admin_home') , 
     path('admin_site/', views.admin_site , name = 'admin_site'),
     path('product_analysis/' , views.product_ana , name = 'product_ana'),
     path('category_analysis/' , views.category_ana , name = 'category_ana'),
@@ -30,11 +44,7 @@ urlpatterns = [
     path('remove_user/<int:user_id>/' , views.remove_user , name = 'remove_user'),
     path('remove_seller/<int:seller_id>/' , views.remove_seller , name = 'remove_seller'),
     path('add_category/' , views.add_category , name = 'add_category'),
-    path('profile/' , views.profile_view , name = 'profile_view') ,
-    path('admin_home/' , views.admin_home , name = 'admin_home') , 
-    path('admin_home/' , views.admin_home , name = 'admin_home') , 
-    path('profile_seller/' , views.profile_seller , name = 'profile_seller') , 
-    path('seller_sales/',views.seller_sales , name = 'seller_sales')
+    
 
 ]
 
